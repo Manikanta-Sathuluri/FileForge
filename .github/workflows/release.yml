@@ -11,6 +11,7 @@ permissions:
 jobs:
   release:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v5
 
@@ -29,17 +30,31 @@ jobs:
         run: python -m pytest
 
       - name: Build
-        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name ImagesToPDF --paths src src/app.py
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name FileForge --paths src src\app.py
+
+      - name: Verify build
+        shell: pwsh
+        run: |
+          if (!(Test-Path "dist\FileForge.exe")) {
+            Write-Error "FileForge.exe was not created."
+            exit 1
+          }
+
+          Write-Host "FileForge.exe created successfully."
+          Get-Item "dist\FileForge.exe" | Format-List Name, Length, FullName
 
       - name: Checksum
         shell: pwsh
         run: |
-          (Get-FileHash "dist/ImagesToPDF.exe" -Algorithm SHA256).Hash | Out-File "dist/SHA256.txt"
+          $hash = (Get-FileHash "dist\FileForge.exe" -Algorithm SHA256).Hash
+          $hash | Out-File "dist\FileForge.exe.sha256" -Encoding ascii
+          Write-Host "SHA-256: $hash"
 
       - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/ImagesToPDF.exe
-            dist/SHA256.txt
+            dist/FileForge.exe
+            dist/FileForge.exe.sha256
           generate_release_notes: true

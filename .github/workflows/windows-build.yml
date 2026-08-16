@@ -12,6 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v5
 
@@ -33,17 +34,30 @@ jobs:
 
       - name: Build EXE
         run: |
-          python -m PyInstaller --noconfirm --clean --onefile --windowed --name ImagesToPDF --paths src src/app.py
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name FileForge --paths src src/app.py
+
+      - name: Verify build
+        shell: pwsh
+        run: |
+          if (!(Test-Path "dist\FileForge.exe")) {
+            Write-Error "FileForge.exe was not created."
+            exit 1
+          }
+
+          Write-Host "FileForge.exe created successfully."
+          Get-Item "dist\FileForge.exe" | Format-List Name, Length, FullName
 
       - name: SHA256
         shell: pwsh
         run: |
-          (Get-FileHash "dist/ImagesToPDF.exe" -Algorithm SHA256).Hash | Out-File "dist/SHA256.txt"
+          $hash = (Get-FileHash "dist\FileForge.exe" -Algorithm SHA256).Hash
+          $hash | Out-File "dist\FileForge.exe.sha256" -Encoding ascii
+          Write-Host "SHA-256: $hash"
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ImagesToPDF-Windows
+          name: FileForge-Windows
           path: |
-            dist/ImagesToPDF.exe
-            dist/SHA256.txt
+            dist/FileForge.exe
+            dist/FileForge.exe.sha256
