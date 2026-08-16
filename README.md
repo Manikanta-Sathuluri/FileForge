@@ -1,4 +1,4 @@
-# FileForge 3.2.0 — PDF & Document Toolbox
+# FileForge 3.2.1 — PDF & Document Toolbox
 
 A polished Windows desktop utility for everyday image, PDF and Word-document work.
 
@@ -120,9 +120,10 @@ MIT. See `LICENSE`.
 
 Third-party packages retain their own licenses. See `THIRD_PARTY_NOTICES.md`.
 
+
 ## Compatibility
 
-FileForge uses `docxcompose 2.2.0` and a modern setuptools version for compatibility with current Python environments.
+FileForge uses `docxcompose 2.2.0` and dependency versions selected for compatibility with current Python environments.
 
 ## Word Merger
 
