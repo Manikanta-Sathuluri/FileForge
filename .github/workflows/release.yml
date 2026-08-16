@@ -1,0 +1,45 @@
+name: Release Windows EXE
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pyinstaller pytest
+
+      - name: Test
+        run: python -m pytest
+
+      - name: Build
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name ImagesToPDF --paths src src/app.py
+
+      - name: Checksum
+        shell: pwsh
+        run: |
+          (Get-FileHash "dist/ImagesToPDF.exe" -Algorithm SHA256).Hash | Out-File "dist/SHA256.txt"
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/ImagesToPDF.exe
+            dist/SHA256.txt
+          generate_release_notes: true
