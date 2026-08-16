@@ -11,6 +11,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      QT_QPA_PLATFORM: offscreen
+
     strategy:
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
