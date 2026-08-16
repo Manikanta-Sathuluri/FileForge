@@ -19,7 +19,7 @@ if not exist dist mkdir dist
 
 echo.
 echo [3/4] Building FileForge.exe...
-py -m PyInstaller --noconfirm --clean --onefile --windowed --name FileForge src\app.py
+py -m PyInstaller --noconfirm --clean --onefile --windowed --name FileForge --paths src src\app.py
 if errorlevel 1 goto :fail
 
 if not exist dist\FileForge.exe goto :fail

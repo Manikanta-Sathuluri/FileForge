@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$exe = Join-Path $PSScriptRoot "dist\ImagesToPDF.exe"
+$exe = Join-Path $PSScriptRoot "dist\FileForge.exe"
 
 if (!(Test-Path $exe)) {
     Write-Host "EXE not found: $exe" -ForegroundColor Red
