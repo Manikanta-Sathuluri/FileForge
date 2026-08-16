@@ -5,6 +5,7 @@ A polished Windows desktop utility for everyday image, PDF and Word-document wor
 ## What it can do
 
 ### Images
+
 - Images → PDF
 - Batch image conversion: JPG / PNG / WebP
 - Folder import
@@ -16,6 +17,7 @@ A polished Windows desktop utility for everyday image, PDF and Word-document wor
 - EXIF orientation handling
 
 ### PDF Toolbox
+
 - Merge multiple PDFs into one
 - Split a PDF into one PDF per page
 - Extract selected page ranges
@@ -28,10 +30,12 @@ A polished Windows desktop utility for everyday image, PDF and Word-document wor
 - PDF metadata: page count and size shown in the file list
 
 ### Word
+
 - Merge multiple DOCX files into one
 - DOCX → PDF through locally installed LibreOffice
 
 ### Convenience
+
 - Dark mode
 - Recent outputs
 - Open output / open containing folder
@@ -60,29 +64,31 @@ The application uses explicit file extensions, local libraries and no shell comm
 
 ## Run
 
-```powershell
-py -m pip install -r requirements.txt
-$env:PYTHONPATH="src"
-py src\app.py
-```
+Install the requirements:
 
-Or:
+    py -m pip install -r requirements.txt
 
-```text
-run.bat
-```
+Set the source directory:
+
+    $env:PYTHONPATH="src"
+
+Run FileForge:
+
+    py src\app.py
+
+Or use:
+
+    run.bat
 
 ## Build Windows EXE
 
-```powershell
-build.bat
-```
+Run:
+
+    build.bat
 
 The build creates:
 
-```text
-dist\FileForge.exe
-```
+    dist\FileForge.exe
 
 ## PDF → Images
 
@@ -94,11 +100,19 @@ Install LibreOffice separately and ensure it is installed in one of the standard
 
 ## Tests
 
-```powershell
-py -m pip install -r requirements-dev.txt
-py -m pytest
-py -m pip_audit
-```
+Install the development dependencies:
+
+    py -m pip install -r requirements-dev.txt
+
+Run the test suite:
+
+    py -m pytest
+
+Run the dependency security audit:
+
+    py -m pip_audit
+
+The project also runs automated tests through GitHub Actions across supported Python versions.
 
 ## License
 
@@ -106,12 +120,11 @@ MIT. See `LICENSE`.
 
 Third-party packages retain their own licenses. See `THIRD_PARTY_NOTICES.md`.
 
+## Compatibility
 
-### Compatibility note
-`setuptools<81` is pinned because `docxcompose 1.4.0` currently imports the legacy `pkg_resources` API.
+FileForge uses `docxcompose 2.2.0` and a modern setuptools version for compatibility with current Python environments.
 
-
-### Word Merger
+## Word Merger
 
 The Word Merger supports a professional multi-file workflow:
 
@@ -123,11 +136,11 @@ The Word Merger supports a professional multi-file workflow:
 - Duplicate file paths are ignored automatically.
 - Choose the final merged DOCX output location.
 
-### History UX
+## History UX
+
 History actions are disabled until an output is selected, and missing outputs/folders now show a clear warning instead of doing nothing.
 
-
-### Image Tools 3.2
+## Image Tools 3.2
 
 - Batch image conversion: JPG, PNG and WebP.
 - Safe PNG/alpha handling when converting to JPG.
@@ -135,3 +148,7 @@ History actions are disabled until an output is selected, and missing outputs/fo
 - Image compression with High Quality, Balanced and Maximum Compression modes.
 - Optional compression output format: Keep original, JPG, PNG or WebP.
 - Image resizing with high-quality Lanczos resampling and aspect-ratio preservation.
+
+## About
+
+A fast, private, offline desktop toolbox for images, PDFs and Word documents.
